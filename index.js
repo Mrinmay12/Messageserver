@@ -50,7 +50,7 @@ let socketport=app.listen(PORT,()=>{
 
 const io = new Server(socketport, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://messageui.onrender.com",
     credentials: true,
   },
 });
