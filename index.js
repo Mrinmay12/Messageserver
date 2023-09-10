@@ -56,12 +56,23 @@ const io = new Server(socketport, {
 });
 
 global.onlineUsers = new Map();
+let activeUsers=[]
+
 io.on("connection", (socket) => {
   global.chatSocket = socket;
   socket.on("add-user", (userId) => {
-    console.log(userId,"userId")
     onlineUsers.set(userId, socket.id);
+    if(!activeUsers.some((user)=>user.userId===userId)){
+
+      activeUsers.push({userId:userId,socketId:socket.id})
+    }
+    io.emit("get-users",activeUsers)
   });
+
+socket.on("disconnect",()=>{
+  activeUsers=activeUsers.filter((user)=>user.socketId !==socket.id)
+  io.emit("get-users",activeUsers)
+})
 
   socket.on("send-msg", (data) => {
     console.log(data,"mybf");
