@@ -74,11 +74,11 @@ socket.on("disconnect",()=>{
   io.emit("get-users",activeUsers)
 })
 
-  socket.on("send-msg", (data) => {
-    console.log(data,"mybf");
+ socket.on("send-msg", (data) => {
+    // console.log(data,"mybf");
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-recieve", data.messagetext);
+      socket.to(sendUserSocket).emit("msg-recieve", data.messagetext,data.messageid);
     }
   });
 });
