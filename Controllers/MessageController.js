@@ -1,7 +1,6 @@
 import Message from "../Models/Messagemodel.js";
 import Userconnect from "../Models/Connectusermodel.js";
 
-
 export const AddtwoUser=async(req,res)=>{
     
     let {senderId,receiverId}=req.body
@@ -16,6 +15,25 @@ export const AddtwoUser=async(req,res)=>{
         console.log(err)
     }
 }
+
+export const UpdateUserLastMessage = async (req, res) => {
+    const { _id} = req.params;
+    try {
+   const result = await Userconnect.findOne({_id:_id})
+     result.UpdateLastMessage=new Date()
+     await  result.save()
+     res.status(200).send({message:"update"})
+
+    //   if (result.modifiedCount > 0) {
+    //     res.send({ message: "Update successful" });
+    //   } else {
+    //     res.status(404).send({ message: "User not found" });
+    //   }
+    } catch (err) {
+      res.status(400).send({ message: err.message });
+    }
+  };
+
 export const sendmessage=async(req,res)=>{
     let{messageId,sender,messagetext}=req.body
     try{
@@ -60,7 +78,7 @@ export const AddMessage=async(req,res)=>{
 export const FinduserFriend=async(req,res)=>{
     try{
         const{userid}=req.params
-        let finduser=await Userconnect.find({members:userid})
+        let finduser=await Userconnect.find({members:userid}).sort({ UpdateLastMessage: -1 })
         res.status(200).send({data:finduser})
 
     }catch(err){

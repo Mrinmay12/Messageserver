@@ -52,9 +52,9 @@ export const Creatuser = async (req, res, next) => {
 
         // Define the email options
         const mailOptions = {
-            from: 'your-email@gmail.com',
+            from: 'your-email@gmail.com', 
             to: email,
-            subject: 'Welcome to Voter App',
+            subject: 'Welcome to First Connect',
             // text: `Your OTP is ${otp}`
             html: `
             <div style="display: grid;grid-template-columns:100px 100px 100px">
@@ -246,11 +246,12 @@ export const AdvenceSearch = (req, res) => {
 export const UserVerify = async (req, res) => {
     try {
         const userId = req.user.userId;
-        if (userId) {
-
+        let data=await User.findOne({user_id:userId})
+        console.log(data,"data");
+        if (data) {
             res.json({ user_id: userId });
         } else {
-            res.json({ message: "user not found" })
+            return res.status(403).json({ message: 'Invalid token', logout: true });
         }
     } catch (error) {
         res.status(500).json({ error: 'An error occurred' });
