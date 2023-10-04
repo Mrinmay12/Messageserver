@@ -50,7 +50,7 @@ let socketport=app.listen(PORT,()=>{
 
 const io = new Server(socketport, {
   cors: {
-    origin: "https://myvoter.cu.ma",
+    origin: "http://localhost:3000",
     credentials: true,
   },
 });
@@ -74,7 +74,7 @@ socket.on("disconnect",()=>{
   io.emit("get-users",activeUsers)
 })
 
- socket.on("send-msg", (data) => {
+  socket.on("send-msg", (data) => {
     // console.log(data,"mybf");
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {

@@ -5,12 +5,13 @@ const messageSchema = new Schema({
   messageId:{
     type:String
   },
-  sender:{
+  sender:{ 
     type:String
   },
  messagetext:{
     type:String
- }
+ },
+ 
      
 }, {
     timestamps:true
