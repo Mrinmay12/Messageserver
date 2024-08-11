@@ -50,7 +50,7 @@ let socketport=app.listen(PORT,()=>{
 
 const io = new Server(socketport, {
   cors: {
-    origin: "https://dellife.vercel.app/",
+    origin: "https://dellife.vercel.app",
     credentials: true,
   },
 });
